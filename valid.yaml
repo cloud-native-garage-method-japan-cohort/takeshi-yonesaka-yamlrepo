@@ -2,8 +2,6 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  annotations:
-      app.openshift.io/runtime: nodejs
   name: takeshi-yonesaka-pipeline-from-scratch-pipeline
 spec:
   workspaces:
