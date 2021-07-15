@@ -1,3 +1,29 @@
 ---
-不正なyamlファイル
-です。
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name:takeshi-yonesaka-pipeline-from-scratch-pipeline
+spec:
+  workspaces:
+    - name:pipeline-shared-data
+  tasks:
+    - name: clone-repository
+       params:
+        - name: url
+          value: https://github.com/upslopeio/express-sample-app
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-shared-data
+    - name: md-lint-run #lint mardown
+    taskRef:
+        name: markdown-lint
+      runAfter:
+        - clone-repository
+      workspaces:
+        - name: shared-workspace
+          workspace: pipeline-shared-data
+      params:
+        - name: args
+          value: ["."]
